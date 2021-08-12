@@ -16,7 +16,12 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 
 public class AppTest {
 
-    // Primeiro teste
+    @BeforeClass
+    public static void setup(){
+        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails(); // Define para log seja mais verboso e facil de entender.
+    }
+
+    // Primeiro teste: Listagem de usuário
     @Test
     public void testeListaMetadosDoUsuario() {
         when(). // Quando
@@ -28,10 +33,11 @@ public class AppTest {
             body("data", is(notNullValue())); // Verifica se array não veio vazio
     }
 
+    //Segundo Teste: Criação de Usuário
     @Test
     public void testeCriarUsuarioComSucesso() {
         given().
-            contentType(ContentType.JSON). // Dfinindo que será enviado um JSON
+            contentType(ContentType.JSON). // Definindo que será enviado um JSON
             body("{\"name\": \"rafael\", \"job\": \"eng test\"}"). // Enviando JSON
         when(). // diz qual será a ação
             post("https://reqres.in/api/users"). // post nesse endereço
