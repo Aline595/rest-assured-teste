@@ -20,6 +20,10 @@ public class AppTest {
             statusCode(200) // Verigica o status code para ver se funcionou
             .body("page", is(2)) // Verifica se está na página 2
             .body("per_page", is(6)) // Verifica quantidade de elementos na página
-            .body("data[0].email", is("michael.lawson@reqres.in")); // Verifica email do primeiro item do array
+            .body("data[0].email", is("michael.lawson@reqres.in")) // Verifica email do primeiro item do array
+            .body("data[0].first_name", is("Michael")); // Verifica nome do primeiro item do array
     }
+
+    // Não usar dados que não consigo controlar, pois normalmente não são assim as aplicações
+    // Não usar número de páginação
 }
