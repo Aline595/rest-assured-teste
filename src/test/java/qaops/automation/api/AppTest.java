@@ -3,11 +3,16 @@
  */
 package qaops.automation.api;
 
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import org.apache.http.HttpStatus;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.notNullValue;
 
 public class AppTest {
 
@@ -17,13 +22,21 @@ public class AppTest {
         when(). // Quando
             get("https://reqres.in/api/users?page=2"). // fazer get no endereço
         then(). //Então
-            statusCode(200) // Verigica o status code para ver se funcionou
-            .body("page", is(2)) // Verifica se está na página 2
-            .body("per_page", is(6)) // Verifica quantidade de elementos na página
-            .body("data[0].email", is("michael.lawson@reqres.in")) // Verifica email do primeiro item do array
-            .body("data[0].first_name", is("Michael")); // Verifica nome do primeiro item do array
+            //SC_OK = 200
+            statusCode(HttpStatus.SC_OK). // Verifica o status code para ver se funcionou
+            body("page", is(2)). // Verifica se está na página 2
+            body("data", is(notNullValue())); // Verifica se array não veio vazio
     }
 
-    // Não usar dados que não consigo controlar, pois normalmente não são assim as aplicações
-    // Não usar número de páginação
+    @Test
+    public void testeCriarUsuarioComSucesso() {
+        given(). // log().all(). // envia as informações + log da linha
+            params("name", "rafael"). // Parametros do corpo
+            params("job", "eng test").
+        when(). // diz qual será a ação
+            post("https://reqres.in/api/users"). // post nesse endereço
+        then().
+            statusCode(HttpStatus.SC_CREATED).
+            body("name", is("rafael"));
+    }
 }
