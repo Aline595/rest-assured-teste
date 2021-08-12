@@ -14,12 +14,15 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 
 public class UsuarioTeste extends BaseTest{
 
+    private static final String LISTA_USUARIOS_ENDPOINT = "/users";
+    private static final String CRIAR_USUARIO_ENDPOINT = "/user";
+
     // Primeiro teste: Listagem de usuário
     @Test
     public void testeListaMetadosDoUsuario() {
         given().params("page", "2"). // Define paramentros da página
         when(). // Quando
-            get("/users"). // fazer get no endereço
+            get(LISTA_USUARIOS_ENDPOINT). // fazer get no endereço
         then(). //Então
             //SC_OK = 200
             statusCode(HttpStatus.SC_OK). // Verifica o status code para ver se funcionou
@@ -34,7 +37,7 @@ public class UsuarioTeste extends BaseTest{
         given().
             body(usuario). // Envia usuario criado
         when(). // diz qual será a ação
-            post("/users"). // post nesse endereço
+            post(CRIAR_USUARIO_ENDPOINT). // post nesse endereço
         then().
             statusCode(HttpStatus.SC_CREATED).
             body("name", is("rafael"));
