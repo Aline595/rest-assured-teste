@@ -39,7 +39,7 @@ public class UsuarioTeste {
     //Segundo Teste: Criação de Usuário
     @Test
     public void testeCriarUsuarioComSucesso() {
-        Usuario usuario = new Usuario("rafael","eng test"); // Cria usuário
+        Usuario usuario = new Usuario("rafael","eng test", "email@gmail.com"); // Cria usuário
         given().
             contentType(ContentType.JSON). // Definindo que será enviado um JSON
             body(usuario). // Envia usuario criado
