@@ -30,9 +30,9 @@ public class AppTest {
 
     @Test
     public void testeCriarUsuarioComSucesso() {
-        given(). // log().all(). // envia as informações + log da linha
-            params("name", "rafael"). // Parametros do corpo
-            params("job", "eng test").
+        given().
+            contentType(ContentType.JSON). // Dfinindo que será enviado um JSON
+            body("{\"name\": \"rafael\", \"job\": \"eng test\"}"). // Enviando JSON
         when(). // diz qual será a ação
             post("https://reqres.in/api/users"). // post nesse endereço
         then().
