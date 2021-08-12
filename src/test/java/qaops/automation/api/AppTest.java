@@ -9,8 +9,7 @@ import org.apache.http.HttpStatus;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
+import static io.restassured.RestAssured.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
@@ -19,13 +18,16 @@ public class AppTest {
     @BeforeClass
     public static void setup(){
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails(); // Define para log seja mais verboso e facil de entender.
+        baseURI = "https://reqres.in"; // Define url base de todos os testes
+        basePath = "/api";  // define caminho base de todos os testes
     }
 
     // Primeiro teste: Listagem de usuário
     @Test
     public void testeListaMetadosDoUsuario() {
+        given().params("page", "2"). // Define paramentros da página
         when(). // Quando
-            get("https://reqres.in/api/users?page=2"). // fazer get no endereço
+            get("/users"). // fazer get no endereço
         then(). //Então
             //SC_OK = 200
             statusCode(HttpStatus.SC_OK). // Verifica o status code para ver se funcionou
@@ -40,9 +42,11 @@ public class AppTest {
             contentType(ContentType.JSON). // Definindo que será enviado um JSON
             body("{\"name\": \"rafael\", \"job\": \"eng test\"}"). // Enviando JSON
         when(). // diz qual será a ação
-            post("https://reqres.in/api/users"). // post nesse endereço
+            post("/users"). // post nesse endereço
         then().
             statusCode(HttpStatus.SC_CREATED).
             body("name", is("rafael"));
     }
 }
+
+// Se rodar ./gradlew test no terminal todos os testes seram executados
