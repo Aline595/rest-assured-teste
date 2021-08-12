@@ -8,6 +8,7 @@ import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import qaops.automation.api.dominio.Usuario;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.CoreMatchers.is;
@@ -38,9 +39,10 @@ public class UsuarioTeste {
     //Segundo Teste: Criação de Usuário
     @Test
     public void testeCriarUsuarioComSucesso() {
+        Usuario usuario = new Usuario("rafael","eng test"); // Cria usuário
         given().
             contentType(ContentType.JSON). // Definindo que será enviado um JSON
-            body("{\"name\": \"rafael\", \"job\": \"eng test\"}"). // Enviando JSON
+            body(usuario). // Envia usuario criado
         when(). // diz qual será a ação
             post("/users"). // post nesse endereço
         then().
@@ -50,3 +52,5 @@ public class UsuarioTeste {
 }
 
 // Se rodar ./gradlew test no terminal todos os testes seram executados
+
+// Serializar => Tranformar objeto java em JSON
